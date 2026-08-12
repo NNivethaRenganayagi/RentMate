@@ -105,11 +105,39 @@
             android:layout_marginTop="16dp"
             android:textSize="16sp" />
 
+        <LinearLayout
+            android:id="@+id/layoutManagement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btnEditProperty"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:text="@string/btn_edit_property"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+            <Button
+                android:id="@+id/btnDeleteProperty"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:text="@string/btn_delete_property"
+                android:textColor="#FF0000"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+        </LinearLayout>
+
         <Button
             android:id="@+id/btnCheckCompatibility"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:text="@string/btn_check_compatibility" />
 
         <Button

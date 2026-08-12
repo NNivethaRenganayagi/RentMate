@@ -20,6 +20,7 @@ class PropertyListActivity : AppCompatActivity() {
     private lateinit var adapter: PropertyAdapter
     private val propertyList = mutableListOf<Property>()
     private val fullPropertyList = mutableListOf<Property>()
+    private var onlyMyProperties: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +34,15 @@ class PropertyListActivity : AppCompatActivity() {
 
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
+
+        onlyMyProperties = intent.getBooleanExtra("ONLY_MY_PROPERTIES", false)
+
+        val toolbar = findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.toolbar)
+        if (onlyMyProperties) {
+            toolbar.title = getString(R.string.btn_my_properties)
+        } else {
+            toolbar.title = getString(R.string.btn_find_properties)
+        }
 
         val rvProperties = findViewById<RecyclerView>(R.id.rvProperties)
         val tvEmpty = findViewById<TextView>(R.id.tvEmpty)
@@ -85,24 +95,30 @@ class PropertyListActivity : AppCompatActivity() {
 
     private fun fetchProperties(pbLoading: ProgressBar, tvEmpty: TextView) {
         pbLoading.visibility = View.VISIBLE
-        db.collection("properties")
-            .addSnapshotListener { snapshots, e ->
-                pbLoading.visibility = View.GONE
-                if (e != null) {
-                    Toast.makeText(this, "Error fetching properties", Toast.LENGTH_SHORT).show()
-                    return@addSnapshotListener
-                }
+        
+        val baseQuery = if (onlyMyProperties) {
+            db.collection("properties").whereEqualTo("ownerId", auth.currentUser?.uid)
+        } else {
+            db.collection("properties")
+        }
 
-                fullPropertyList.clear()
-                if (snapshots != null) {
-                    for (doc in snapshots) {
-                        val property = doc.toObject(Property::class.java)
-                        fullPropertyList.add(property)
-                    }
-                }
-
-                showAllProperties(tvEmpty)
+        baseQuery.addSnapshotListener { snapshots, e ->
+            pbLoading.visibility = View.GONE
+            if (e != null) {
+                Toast.makeText(this, "Error fetching properties", Toast.LENGTH_SHORT).show()
+                return@addSnapshotListener
             }
+
+            fullPropertyList.clear()
+            if (snapshots != null) {
+                for (doc in snapshots) {
+                    val property = doc.toObject(Property::class.java)
+                    fullPropertyList.add(property)
+                }
+            }
+
+            showAllProperties(tvEmpty)
+        }
     }
 
     private fun showAllProperties(tvEmpty: TextView) {

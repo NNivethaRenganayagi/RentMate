@@ -14,5 +14,9 @@ data class UserProfile(
     val smoking: Boolean = false,
     val pets: Boolean = false,
     val leaseDuration: String = "",
-    val amenities: String = ""
+    val amenities: String = "",
+    // Landlord specific fields
+    val minRent: String = "",
+    val maxRent: String = "",
+    val preferredPropertyType: String = ""
 )

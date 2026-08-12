@@ -2,18 +2,23 @@ package com.nivetha.rentmate
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class PropertyDetailsActivity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +31,7 @@ class PropertyDetailsActivity : AppCompatActivity() {
         }
 
         db = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
 
         val propertyId = intent.getStringExtra("PROPERTY_ID") ?: return
 
@@ -41,6 +47,10 @@ class PropertyDetailsActivity : AppCompatActivity() {
         val tvDescription = findViewById<TextView>(R.id.tvDescription)
         val btnCheckCompatibility = findViewById<Button>(R.id.btnCheckCompatibility)
         val btnCheckLandlordCompatibility = findViewById<Button>(R.id.btnCheckLandlordCompatibility)
+        
+        val layoutManagement = findViewById<LinearLayout>(R.id.layoutManagement)
+        val btnEdit = findViewById<Button>(R.id.btnEditProperty)
+        val btnDelete = findViewById<Button>(R.id.btnDeleteProperty)
 
         db.collection("properties").document(propertyId)
             .get()
@@ -59,6 +69,11 @@ class PropertyDetailsActivity : AppCompatActivity() {
                         tvAmenities.text = "${getString(R.string.label_amenities)}${it.amenities}"
                         tvRules.text = "${getString(R.string.label_rules)}${it.rules}"
                         tvDescription.text = "${getString(R.string.label_description)}${it.description}"
+
+                        // Check ownership
+                        if (it.ownerId == auth.currentUser?.uid) {
+                            layoutManagement.visibility = View.VISIBLE
+                        }
                     }
                 }
             }
@@ -73,6 +88,47 @@ class PropertyDetailsActivity : AppCompatActivity() {
             val intent = Intent(this, LandlordTenantCompatibilityActivity::class.java)
             intent.putExtra("PROPERTY_ID", propertyId)
             startActivity(intent)
+        }
+
+        btnEdit.setOnClickListener {
+            val intent = Intent(this, AddPropertyActivity::class.java)
+            intent.putExtra("PROPERTY_ID", propertyId)
+            startActivity(intent)
+        }
+
+        btnDelete.setOnClickListener {
+            showDeleteConfirmation(propertyId)
+        }
+    }
+
+    private fun showDeleteConfirmation(propertyId: String) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.delete_confirm_title)
+            .setMessage(R.string.delete_confirm_msg)
+            .setPositiveButton(R.string.btn_confirm_delete) { _, _ ->
+                deleteProperty(propertyId)
+            }
+            .setNegativeButton(R.string.btn_cancel, null)
+            .show()
+    }
+
+    private fun deleteProperty(propertyId: String) {
+        val currentUid = auth.currentUser?.uid ?: return
+        
+        // Final ownership check before delete
+        db.collection("properties").document(propertyId).get().addOnSuccessListener { doc ->
+            if (doc.getString("ownerId") == currentUid) {
+                db.collection("properties").document(propertyId).delete()
+                    .addOnSuccessListener {
+                        Toast.makeText(this, R.string.property_deleted, Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Error deleting property", Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(this, R.string.error_ownership, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

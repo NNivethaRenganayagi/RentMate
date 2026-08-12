@@ -16,226 +16,290 @@
         app:title="@string/profile_title"
         app:titleTextColor="@color/white" />
 
+    <!-- Overall Loading State -->
+    <ProgressBar
+        android:id="@+id/pbProfileLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:visibility="visible"/>
+
     <ScrollView
+        android:id="@+id/scrollProfile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:visibility="gone">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/profile_title"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"/>
-
-        <!-- Basic Information -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/section_basic_info"
-            android:textStyle="bold"
-            android:layout_marginTop="16dp"/>
-
-        <EditText
-            android:id="@+id/etFullName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_full_name"
-            android:inputType="textPersonName"/>
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <EditText
-            android:id="@+id/etAge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_age"
-            android:inputType="number"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_role"
-            android:layout_marginTop="8dp"/>
-
-        <RadioGroup
-            android:id="@+id/rgRole"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:id="@+id/rbTenant"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/role_tenant"
-                android:checked="true"/>
-            <RadioButton
-                android:id="@+id/rbLandlord"
+                android:text="@string/profile_title"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Basic Information (Always Visible) -->
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/role_landlord"/>
-        </RadioGroup>
+                android:text="@string/section_basic_info"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
 
-        <EditText
-            android:id="@+id/etLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_location"
-            android:inputType="text"/>
+            <EditText
+                android:id="@+id/etFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_full_name"
+                android:inputType="textPersonName"/>
 
-        <!-- Rental Information -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/section_rental_info"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"/>
+            <EditText
+                android:id="@+id/etAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_age"
+                android:inputType="number"/>
 
-        <EditText
-            android:id="@+id/etBudget"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_budget"
-            android:inputType="numberDecimal"/>
-
-        <EditText
-            android:id="@+id/etPrefLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_pref_location"
-            android:inputType="text"/>
-
-        <EditText
-            android:id="@+id/etRoomType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_room_type"
-            android:inputType="text"/>
-
-        <!-- Lifestyle -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/section_lifestyle"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_cleanliness"
-            android:layout_marginTop="8dp"/>
-
-        <SeekBar
-            android:id="@+id/sbCleanliness"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="4"
-            android:progress="2"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_sleep_schedule"
-            android:layout_marginTop="8dp"/>
-
-        <Spinner
-            android:id="@+id/spSleepSchedule"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/sleep_schedules"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_food_pref"
-            android:layout_marginTop="8dp"/>
-
-        <RadioGroup
-            android:id="@+id/rgFood"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton
-                android:id="@+id/rbVeg"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/food_veg"/>
-            <RadioButton
-                android:id="@+id/rbNonVeg"
+                android:text="@string/label_role"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Role is displayed but selection is disabled to prevent accidental changes -->
+            <RadioGroup
+                android:id="@+id/rgRole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/rbTenant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/role_tenant"
+                    android:clickable="false"/>
+                <RadioButton
+                    android:id="@+id/rbLandlord"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/role_landlord"
+                    android:clickable="false"/>
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/etLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_location"
+                android:inputType="text"/>
+
+            <!-- Rental Information (Tenant Only) -->
+            <LinearLayout
+                android:id="@+id/layoutTenantRental"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/section_rental_info"
+                    android:textStyle="bold"
+                    android:layout_marginTop="24dp"/>
+
+                <EditText
+                    android:id="@+id/etBudget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_budget"
+                    android:inputType="numberDecimal"/>
+
+                <EditText
+                    android:id="@+id/etPrefLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_pref_location"
+                    android:inputType="text"/>
+
+                <EditText
+                    android:id="@+id/etRoomType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_room_type"
+                    android:inputType="text"/>
+            </LinearLayout>
+
+            <!-- Landlord Information (Landlord Only) -->
+            <LinearLayout
+                android:id="@+id/layoutLandlordInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/section_landlord_info"
+                    android:textStyle="bold"
+                    android:layout_marginTop="24dp"/>
+
+                <EditText
+                    android:id="@+id/etMinRent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_min_target_rent"
+                    android:inputType="number"/>
+
+                <EditText
+                    android:id="@+id/etMaxRent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_max_target_rent"
+                    android:inputType="number"/>
+
+                <EditText
+                    android:id="@+id/etPreferredPropType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint_pref_prop_type"
+                    android:inputType="text"/>
+            </LinearLayout>
+
+            <!-- Lifestyle (Tenant Only) -->
+            <LinearLayout
+                android:id="@+id/layoutTenantLifestyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/section_lifestyle"
+                    android:textStyle="bold"
+                    android:layout_marginTop="24dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_cleanliness"
+                    android:layout_marginTop="8dp"/>
+
+                <SeekBar
+                    android:id="@+id/sbCleanliness"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="4"
+                    android:progress="2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_sleep_schedule"
+                    android:layout_marginTop="8dp"/>
+
+                <Spinner
+                    android:id="@+id/spSleepSchedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/sleep_schedules"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_food_pref"
+                    android:layout_marginTop="8dp"/>
+
+                <RadioGroup
+                    android:id="@+id/rgFood"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/rbVeg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/food_veg"/>
+                    <RadioButton
+                        android:id="@+id/rbNonVeg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/food_nonveg"/>
+                    <RadioButton
+                        android:id="@+id/rbAnyFood"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/food_any"
+                        android:checked="true"/>
+                </RadioGroup>
+
+                <CheckBox
+                    android:id="@+id/cbSmoking"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_smoking"/>
+
+                <CheckBox
+                    android:id="@+id/cbPets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_pets"/>
+            </LinearLayout>
+
+            <!-- Preferences (Always Visible) -->
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/food_nonveg"/>
-            <RadioButton
-                android:id="@+id/rbAnyFood"
+                android:text="@string/section_preferences"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp"/>
+
+            <EditText
+                android:id="@+id/etLeaseDuration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_lease_duration"
+                android:inputType="text"/>
+
+            <EditText
+                android:id="@+id/etAmenities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_amenities"
+                android:inputType="text"/>
+
+            <Button
+                android:id="@+id/btnSaveProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_save_profile"
+                android:layout_marginTop="32dp" />
+
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_logout"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+            <ProgressBar
+                android:id="@+id/profileProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/food_any"
-                android:checked="true"/>
-        </RadioGroup>
+                android:layout_gravity="center"
+                android:visibility="gone"/>
 
-        <CheckBox
-            android:id="@+id/cbSmoking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_smoking"/>
-
-        <CheckBox
-            android:id="@+id/cbPets"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_pets"/>
-
-        <!-- Preferences -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/section_preferences"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"/>
-
-        <EditText
-            android:id="@+id/etLeaseDuration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_lease_duration"
-            android:inputType="text"/>
-
-        <EditText
-            android:id="@+id/etAmenities"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_amenities"
-            android:inputType="text"/>
-
-        <Button
-            android:id="@+id/btnSaveProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_save_profile"
-            android:layout_marginTop="32dp" />
-
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_logout"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
-
-        <ProgressBar
-            android:id="@+id/profileProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
-
-    </LinearLayout>
-</ScrollView>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

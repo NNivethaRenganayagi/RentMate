@@ -39,6 +39,12 @@
     <string name="label_smoking">Smoking</string>
     <string name="label_pets">Pets</string>
 
+    <!-- Landlord Profile Strings -->
+    <string name="section_landlord_info">Landlord Preferences</string>
+    <string name="hint_min_target_rent">Minimum Target Rent (₹)</string>
+    <string name="hint_max_target_rent">Maximum Target Rent (₹)</string>
+    <string name="hint_pref_prop_type">Preferred Property Type (e.g. Apartment)</string>
+
     <string name="section_preferences">Preferences</string>
     <string name="hint_lease_duration">Lease Duration (e.g. 11 months)</string>
     <string name="hint_amenities">Preferred Amenities (e.g. WiFi, Parking)</string>
@@ -163,6 +169,18 @@
     <string name="error_invalid_bedrooms">Please enter a valid number of bedrooms.</string>
     <string name="property_saved">Property listed successfully!</string>
     <string name="property_save_failed">Failed to list property.</string>
+    <string name="property_updated">Property updated successfully!</string>
+    <string name="btn_my_properties">My Properties</string>
+    <string name="btn_find_properties">Find Properties</string>
+    <string name="property_deleted">Property deleted successfully!</string>
+    <string name="error_ownership">You do not have permission to modify this property.</string>
+    <string name="btn_edit_property">Edit Property</string>
+    <string name="btn_delete_property">Delete Property</string>
+    <string name="btn_update_property">Update Property</string>
+    <string name="delete_confirm_title">Delete Property</string>
+    <string name="delete_confirm_msg">Are you sure you want to delete this property?</string>
+    <string name="btn_confirm_delete">Delete</string>
+    <string name="btn_cancel">Cancel</string>
     <string name="not_specified">Not specified</string>
 
     <!-- Logout Strings -->

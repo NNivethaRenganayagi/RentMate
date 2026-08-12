@@ -147,7 +147,7 @@ class LandlordTenantCompatibilityActivity : AppCompatActivity() {
         var leaseScore = 0.0
         if (tenant.leaseDuration.isNullOrEmpty() || prop.leaseDuration.isNullOrEmpty()) {
             leaseScore = 80.0
-            explanations.add("Lease duration not specified (Fair match)")
+            explanations.add("${getString(R.string.hint_lease_duration)}: ${getString(R.string.not_specified)} (Fair match)")
         } else if (tenant.leaseDuration.contains(prop.leaseDuration, ignoreCase = true) || 
             prop.leaseDuration.contains(tenant.leaseDuration, ignoreCase = true)) {
             leaseScore = 100.0
@@ -176,13 +176,21 @@ class LandlordTenantCompatibilityActivity : AppCompatActivity() {
 
         // 4. Lifestyle (15%)
         // Comparing cleanliness as a proxy for lifestyle match
-        val cleanDiff = abs(tenant.cleanliness - landlord.cleanliness)
-        val lifestyleScore = (5 - cleanDiff) / 5.0 * 100.0
-        if (lifestyleScore >= 80) explanations.add(getString(R.string.match_clean_similar))
+        var lifestyleScore = 0.0
+        if (landlord.cleanliness == 0) {
+            lifestyleScore = 80.0
+            explanations.add("Landlord lifestyle info not specified (Fair match)")
+        } else {
+            val cleanDiff = abs(tenant.cleanliness - landlord.cleanliness)
+            lifestyleScore = (5 - cleanDiff) / 5.0 * 100.0
+            if (lifestyleScore >= 80) explanations.add(getString(R.string.match_clean_similar))
+        }
 
         // 5. Preferences / Communication (10%)
         // Matching sleep schedule as a proxy for communication/preference match
-        val commScore = if (tenant.sleepSchedule == landlord.sleepSchedule) 100.0 else 60.0
+        val commScore = if (landlord.sleepSchedule.isEmpty()) 80.0 
+                        else if (tenant.sleepSchedule == landlord.sleepSchedule) 100.0 
+                        else 60.0
 
         // 6. Location (10%)
         var locationScore = 0.0

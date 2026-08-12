@@ -15,6 +15,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
+    private var currentUserRole: String = "Tenant"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +30,17 @@ class ProfileActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
+        val pbLoading = findViewById<ProgressBar>(R.id.pbProfileLoading)
+        val scrollProfile = findViewById<ScrollView>(R.id.scrollProfile)
+        
         val etFullName = findViewById<EditText>(R.id.etFullName)
         val etAge = findViewById<EditText>(R.id.etAge)
         val rgRole = findViewById<RadioGroup>(R.id.rgRole)
         val etLocation = findViewById<EditText>(R.id.etLocation)
+        
+        // Tenant Layouts
+        val layoutTenantRental = findViewById<LinearLayout>(R.id.layoutTenantRental)
+        val layoutTenantLifestyle = findViewById<LinearLayout>(R.id.layoutTenantLifestyle)
         val etBudget = findViewById<EditText>(R.id.etBudget)
         val etPrefLocation = findViewById<EditText>(R.id.etPrefLocation)
         val etRoomType = findViewById<EditText>(R.id.etRoomType)
@@ -41,77 +49,30 @@ class ProfileActivity : AppCompatActivity() {
         val rgFood = findViewById<RadioGroup>(R.id.rgFood)
         val cbSmoking = findViewById<CheckBox>(R.id.cbSmoking)
         val cbPets = findViewById<CheckBox>(R.id.cbPets)
+
+        // Landlord Layouts
+        val layoutLandlordInfo = findViewById<LinearLayout>(R.id.layoutLandlordInfo)
+        val etMinRent = findViewById<EditText>(R.id.etMinRent)
+        val etMaxRent = findViewById<EditText>(R.id.etMaxRent)
+        val etPreferredPropType = findViewById<EditText>(R.id.etPreferredPropType)
+
+        // Shared
         val etLeaseDuration = findViewById<EditText>(R.id.etLeaseDuration)
         val etAmenities = findViewById<EditText>(R.id.etAmenities)
         val btnSaveProfile = findViewById<Button>(R.id.btnSaveProfile)
         val btnLogout = findViewById<Button>(R.id.btnLogout)
         val progressBar = findViewById<ProgressBar>(R.id.profileProgressBar)
 
-        loadProfileData(etFullName, etAge, rgRole, etLocation, etBudget, etPrefLocation,
-            etRoomType, sbCleanliness, spSleepSchedule, rgFood, cbSmoking, cbPets,
-            etLeaseDuration, etAmenities, progressBar)
+        loadProfileData(pbLoading, scrollProfile, etFullName, etAge, rgRole, etLocation, 
+            etBudget, etPrefLocation, etRoomType, sbCleanliness, spSleepSchedule, rgFood, cbSmoking, cbPets,
+            layoutTenantRental, layoutTenantLifestyle, layoutLandlordInfo,
+            etMinRent, etMaxRent, etPreferredPropType, etLeaseDuration, etAmenities)
 
         btnSaveProfile.setOnClickListener {
-            val fullName = etFullName.text.toString().trim()
-            val age = etAge.text.toString().trim()
-            val location = etLocation.text.toString().trim()
-
-            if (fullName.isEmpty() || age.isEmpty() || location.isEmpty()) {
-                Toast.makeText(this, R.string.error_mandatory, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            val role = if (findViewById<RadioButton>(rgRole.checkedRadioButtonId).id == R.id.rbTenant) "Tenant" else "Landlord"
-            val budget = etBudget.text.toString().trim()
-            val prefLocation = etPrefLocation.text.toString().trim()
-            val roomType = etRoomType.text.toString().trim()
-            val cleanliness = sbCleanliness.progress + 1
-            val sleepSchedule = spSleepSchedule.selectedItem.toString()
-            val foodPref = when (rgFood.checkedRadioButtonId) {
-                R.id.rbVeg -> "Vegetarian"
-                R.id.rbNonVeg -> "Non-Vegetarian"
-                else -> "Any"
-            }
-            val smoking = cbSmoking.isChecked
-            val pets = cbPets.isChecked
-            val leaseDuration = etLeaseDuration.text.toString().trim()
-            val amenities = etAmenities.text.toString().trim()
-
-            val userId = auth.currentUser?.uid ?: return@setOnClickListener
-
-            val userProfile = hashMapOf(
-                "fullName" to fullName,
-                "age" to age,
-                "role" to role,
-                "location" to location,
-                "budget" to budget,
-                "preferredLocation" to prefLocation,
-                "roomType" to roomType,
-                "cleanliness" to cleanliness,
-                "sleepSchedule" to sleepSchedule,
-                "foodPreference" to foodPref,
-                "smoking" to smoking,
-                "pets" to pets,
-                "leaseDuration" to leaseDuration,
-                "amenities" to amenities
-            )
-
-            progressBar.visibility = View.VISIBLE
-            btnSaveProfile.isEnabled = false
-
-            db.collection("users").document(userId)
-                .set(userProfile)
-                .addOnSuccessListener {
-                    progressBar.visibility = View.GONE
-                    btnSaveProfile.isEnabled = true
-                    Toast.makeText(this, R.string.profile_saved, Toast.LENGTH_SHORT).show()
-                    finish()
-                }
-                .addOnFailureListener { e ->
-                    progressBar.visibility = View.GONE
-                    btnSaveProfile.isEnabled = true
-                    Toast.makeText(this, "${getString(R.string.profile_save_failed)}: ${e.message}", Toast.LENGTH_LONG).show()
-                }
+            saveProfile(etFullName, etAge, etLocation, etBudget, etPrefLocation, etRoomType,
+                sbCleanliness, spSleepSchedule, rgFood, cbSmoking, cbPets,
+                etMinRent, etMaxRent, etPreferredPropType, etLeaseDuration, etAmenities,
+                btnSaveProfile, progressBar)
         }
 
         btnLogout.setOnClickListener {
@@ -125,53 +86,137 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun loadProfileData(
-        etName: EditText, etAge: EditText, rgRole: RadioGroup, etLoc: EditText,
+        pb: ProgressBar, scroll: ScrollView, etName: EditText, etAge: EditText, rgRole: RadioGroup, etLoc: EditText,
         etBud: EditText, etPrefLoc: EditText, etRoom: EditText, sbClean: SeekBar,
         spSleep: Spinner, rgFood: RadioGroup, cbSmoke: CheckBox, cbPets: CheckBox,
-        etLease: EditText, etAmen: EditText, pb: ProgressBar
+        layTenantRental: View, layTenantLife: View, layLandlord: View,
+        etMinR: EditText, etMaxR: EditText, etPropT: EditText, etLease: EditText, etAmen: EditText
     ) {
         val uid = auth.currentUser?.uid ?: return
         pb.visibility = View.VISIBLE
+        scroll.visibility = View.GONE
 
         db.collection("users").document(uid).get()
             .addOnSuccessListener { doc ->
                 pb.visibility = View.GONE
+                scroll.visibility = View.VISIBLE
                 if (doc.exists()) {
                     val profile = doc.toObject(UserProfile::class.java)
                     profile?.let {
+                        currentUserRole = it.role
                         etName.setText(it.fullName)
                         etAge.setText(it.age)
                         etLoc.setText(it.location)
-                        etBud.setText(it.budget)
-                        etPrefLoc.setText(it.preferredLocation)
-                        etRoom.setText(it.roomType)
-                        sbClean.progress = (it.cleanliness - 1).coerceIn(0, 4)
-                        
-                        if (it.role == "Landlord") {
-                            rgRole.check(R.id.rbLandlord)
-                        } else {
-                            rgRole.check(R.id.rbTenant)
-                        }
-
-                        val sleepArray = resources.getStringArray(R.array.sleep_schedules)
-                        val sleepIndex = sleepArray.indexOf(it.sleepSchedule)
-                        if (sleepIndex >= 0) spSleep.setSelection(sleepIndex)
-
-                        when (it.foodPreference) {
-                            "Vegetarian" -> rgFood.check(R.id.rbVeg)
-                            "Non-Vegetarian" -> rgFood.check(R.id.rbNonVeg)
-                            else -> rgFood.check(R.id.rbAnyFood)
-                        }
-
-                        cbSmoke.isChecked = it.smoking
-                        cbPets.isChecked = it.pets
                         etLease.setText(it.leaseDuration)
                         etAmen.setText(it.amenities)
+
+                        if (it.role == "Landlord") {
+                            rgRole.check(R.id.rbLandlord)
+                            layTenantRental.visibility = View.GONE
+                            layTenantLife.visibility = View.GONE
+                            layLandlord.visibility = View.VISIBLE
+                            etMinR.setText(it.minRent)
+                            etMaxR.setText(it.maxRent)
+                            etPropT.setText(it.preferredPropertyType)
+                        } else {
+                            rgRole.check(R.id.rbTenant)
+                            layTenantRental.visibility = View.VISIBLE
+                            layTenantLife.visibility = View.VISIBLE
+                            layLandlord.visibility = View.GONE
+                            etBud.setText(it.budget)
+                            etPrefLoc.setText(it.preferredLocation)
+                            etRoom.setText(it.roomType)
+                            sbClean.progress = (it.cleanliness - 1).coerceIn(0, 4)
+                            
+                            val sleepArray = resources.getStringArray(R.array.sleep_schedules)
+                            val sleepIndex = sleepArray.indexOf(it.sleepSchedule)
+                            if (sleepIndex >= 0) spSleep.setSelection(sleepIndex)
+
+                            when (it.foodPreference) {
+                                "Vegetarian" -> rgFood.check(R.id.rbVeg)
+                                "Non-Vegetarian" -> rgFood.check(R.id.rbNonVeg)
+                                else -> rgFood.check(R.id.rbAnyFood)
+                            }
+                            cbSmoke.isChecked = it.smoking
+                            cbPets.isChecked = it.pets
+                        }
                     }
                 }
             }
             .addOnFailureListener {
                 pb.visibility = View.GONE
+                scroll.visibility = View.VISIBLE
+            }
+    }
+
+    private fun saveProfile(
+        etName: EditText, etAge: EditText, etLoc: EditText, etBud: EditText, etPrefLoc: EditText, etRoom: EditText,
+        sbClean: SeekBar, spSleep: Spinner, rgFood: RadioGroup, cbSmoke: CheckBox, cbPets: CheckBox,
+        etMinR: EditText, etMaxR: EditText, etPropT: EditText, etLease: EditText, etAmen: EditText,
+        btnSave: Button, pb: ProgressBar
+    ) {
+        val fullName = etName.text.toString().trim()
+        val age = etAge.text.toString().trim()
+        val location = etLoc.text.toString().trim()
+
+        if (fullName.isEmpty() || age.isEmpty() || location.isEmpty()) {
+            Toast.makeText(this, R.string.error_mandatory, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val uid = auth.currentUser?.uid ?: return
+        val userProfileMap = mutableMapOf<String, Any>(
+            "fullName" to fullName,
+            "age" to age,
+            "location" to location,
+            "leaseDuration" to etLease.text.toString().trim(),
+            "amenities" to etAmen.text.toString().trim(),
+            "role" to currentUserRole // Locked role
+        )
+
+        if (currentUserRole == "Landlord") {
+            userProfileMap["minRent"] = etMinR.text.toString().trim()
+            userProfileMap["maxRent"] = etMaxR.text.toString().trim()
+            userProfileMap["preferredPropertyType"] = etPropT.text.toString().trim()
+        } else {
+            userProfileMap["budget"] = etBud.text.toString().trim()
+            userProfileMap["preferredLocation"] = etPrefLoc.text.toString().trim()
+            userProfileMap["roomType"] = etRoom.text.toString().trim()
+            userProfileMap["cleanliness"] = sbClean.progress + 1
+            userProfileMap["sleepSchedule"] = spSleep.selectedItem.toString()
+            userProfileMap["foodPreference"] = when (rgFood.checkedRadioButtonId) {
+                R.id.rbVeg -> "Vegetarian"
+                R.id.rbNonVeg -> "Non-Vegetarian"
+                else -> "Any"
+            }
+            userProfileMap["smoking"] = cbSmoke.isChecked
+            userProfileMap["pets"] = cbPets.isChecked
+        }
+
+        pb.visibility = View.VISIBLE
+        btnSave.isEnabled = false
+
+        db.collection("users").document(uid).update(userProfileMap)
+            .addOnSuccessListener {
+                pb.visibility = View.GONE
+                btnSave.isEnabled = true
+                Toast.makeText(this, R.string.profile_saved, Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener { e ->
+                // If update fails (e.g. doc doesn't exist yet for new users), try set()
+                db.collection("users").document(uid).set(userProfileMap)
+                    .addOnSuccessListener {
+                        pb.visibility = View.GONE
+                        btnSave.isEnabled = true
+                        Toast.makeText(this, R.string.profile_saved, Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                    .addOnFailureListener { err ->
+                        pb.visibility = View.GONE
+                        btnSave.isEnabled = true
+                        Toast.makeText(this, "${getString(R.string.profile_save_failed)}: ${err.message}", Toast.LENGTH_LONG).show()
+                    }
             }
     }
 }
