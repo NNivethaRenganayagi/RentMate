@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1058117529110",
+    "project_id": "rentmate-38011",
+    "storage_bucket": "rentmate-38011.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058117529110:android:91b83b1199880ae9888f37",
+        "android_client_info": {
+          "package_name": "com.nivetha.rentmate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdVjzx0fAAPsD_GaPotWQoxw7F-dE8Zvk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

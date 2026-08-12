@@ -1,0 +1,171 @@
+<resources>
+    <string name="app_name">RentMate</string>
+    <string name="login_title">RentMate</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_signup">Sign Up</string>
+    <string name="toggle_signup">Don\'t have an account? Sign Up</string>
+    <string name="toggle_login">Already have an account? Login</string>
+    <string name="welcome_rentmate">Welcome to RentMate</string>
+    <string name="error_empty">Email and password cannot be empty</string>
+    <string name="auth_failed">Authentication failed.</string>
+
+    <!-- Profile Screen Strings -->
+    <string name="profile_title">User Profile</string>
+    <string name="btn_save_profile">Save Profile</string>
+    <string name="btn_edit_profile">Edit Profile</string>
+
+    <string name="section_basic_info">Basic Information</string>
+    <string name="hint_full_name">Full Name</string>
+    <string name="hint_age">Age</string>
+    <string name="hint_location">Current Location (e.g. Adyar, Chennai)</string>
+    <string name="label_role">Role:</string>
+    <string name="role_tenant">Tenant</string>
+    <string name="role_landlord">Landlord</string>
+
+    <string name="section_rental_info">Rental Information</string>
+    <string name="hint_budget">Monthly Budget (₹)</string>
+    <string name="hint_pref_location">Preferred Location (e.g. OMR, Chennai)</string>
+    <string name="hint_room_type">Room Type (e.g. Single, Shared)</string>
+
+    <string name="section_lifestyle">Lifestyle</string>
+    <string name="label_cleanliness">Cleanliness (1-5):</string>
+    <string name="label_sleep_schedule">Sleep Schedule:</string>
+    <string name="label_food_pref">Food Preference:</string>
+    <string name="food_veg">Vegetarian</string>
+    <string name="food_nonveg">Non-Vegetarian</string>
+    <string name="food_any">Any</string>
+    <string name="label_smoking">Smoking</string>
+    <string name="label_pets">Pets</string>
+
+    <string name="section_preferences">Preferences</string>
+    <string name="hint_lease_duration">Lease Duration (e.g. 11 months)</string>
+    <string name="hint_amenities">Preferred Amenities (e.g. WiFi, Parking)</string>
+
+    <string name="profile_saved">Profile saved successfully!</string>
+    <string name="profile_save_failed">Failed to save profile.</string>
+    <string name="error_mandatory">Please fill in all mandatory fields</string>
+
+    <!-- Property Module Strings -->
+    <string name="title_properties">Properties</string>
+    <string name="title_property_details">Property Details</string>
+    <string name="btn_view_properties">View Properties</string>
+    <string name="btn_add_test_property">Add Indian Test Property</string>
+    <string name="btn_check_compatibility">Check Compatibility</string>
+    <string name="msg_no_properties">No properties found.</string>
+    <string name="label_rent">Rent: ₹</string>
+    <string name="label_location">Location: </string>
+    <string name="label_property_type">Type: </string>
+    <string name="label_bedrooms">Bedrooms: </string>
+    <string name="label_room_type">Room Type: </string>
+    <string name="label_amenities">Amenities: </string>
+    <string name="label_rules">Rules: </string>
+    <string name="label_description">Description: </string>
+    <string name="compatibility_placeholder">Compatibility feature coming soon!</string>
+    <string name="test_property_added">Indian test property added successfully!</string>
+    <string name="test_property_failed">Failed to add test property.</string>
+
+    <!-- Compatibility Strings -->
+    <string name="title_compatibility">Compatibility Result</string>
+    <string name="label_overall_match">Overall Match</string>
+    <string name="label_why_this_match">Why this match?</string>
+    <string name="label_budget_match">Budget Match: </string>
+    <string name="label_location_match">Location Match: </string>
+    <string name="label_room_type_match">Room Type Match: </string>
+    <string name="label_amenities_match">Amenities Match: </string>
+    <string name="label_rules_match">Rules Match: </string>
+
+    <string name="cat_excellent">Excellent Match</string>
+    <string name="cat_good">Good Match</string>
+    <string name="cat_moderate">Moderate Match</string>
+    <string name="cat_poor">Poor Match</string>
+
+    <string name="match_budget_ok">✓ Your budget fits the property</string>
+    <string name="match_budget_partial">⚠ Property rent is slightly above your budget</string>
+    <string name="match_budget_bad">⚠ Property rent is significantly above your budget</string>
+    <string name="match_location_ok">✓ Preferred location matches</string>
+    <string name="match_location_bad">⚠ Different location than preferred</string>
+    <string name="match_room_type_ok">✓ Room type matches</string>
+    <string name="match_room_type_bad">⚠ Room type does not match</string>
+    <string name="match_rules_pets">⚠ Property does not allow pets</string>
+    <string name="match_rules_smoking">⚠ Property does not allow smoking</string>
+    <string name="match_rules_ok">✓ No lifestyle-rule conflicts found</string>
+    <string name="error_profile_missing">Please complete your profile first!</string>
+    <string name="error_loading_data">Error loading compatibility data.</string>
+
+    <!-- Roommate Module Strings -->
+    <string name="title_roommates">Find Roommates</string>
+    <string name="title_roommate_compatibility">Roommate Compatibility</string>
+    <string name="btn_find_roommates">Find Roommates</string>
+    <string name="msg_no_roommates">No roommates found.</string>
+
+    <string name="label_cleanliness_match">Cleanliness Match: </string>
+    <string name="label_sleep_match">Sleep Schedule Match: </string>
+    <string name="label_food_match">Food Preference Match: </string>
+
+    <string name="match_budget_similar">✓ Similar monthly budget</string>
+    <string name="match_location_city">✓ Both prefer the same city</string>
+    <string name="match_clean_similar">✓ Similar cleanliness preferences</string>
+    <string name="match_sleep_same">✓ Same sleep schedule</string>
+    <string name="match_food_ok">✓ Compatible food preferences</string>
+
+    <string name="conflict_budget">⚠ Significant budget difference</string>
+    <string name="conflict_location">⚠ Prefer different cities</string>
+    <string name="conflict_clean">⚠ Different cleanliness standards</string>
+    <string name="conflict_sleep">⚠ Very different sleep schedules</string>
+    <string name="conflict_food">⚠ Different food preferences</string>
+    <string name="conflict_smoking">⚠ Different smoking preferences</string>
+    <string name="conflict_pets">⚠ Different pet preferences</string>
+
+    <!-- Landlord Compatibility Strings -->
+    <string name="title_landlord_compatibility">Landlord Compatibility</string>
+    <string name="btn_check_landlord_compatibility">Check Landlord Compatibility</string>
+    <string name="label_landlord_match">Overall Match with Landlord</string>
+
+    <string name="label_lease_match">Lease Duration Match: </string>
+    <string name="label_comm_match">Communication Preference Match: </string>
+
+    <string name="match_lease_ok">✓ Lease duration matches</string>
+    <string name="match_lease_similar">✓ Similar lease duration</string>
+    <string name="match_lease_bad">⚠ Major difference in lease duration</string>
+
+    <string name="match_rules_smoke_ok">✓ Lifestyle matches smoking policy</string>
+    <string name="match_rules_pets_ok">✓ Lifestyle matches pet policy</string>
+
+    <string name="error_landlord_missing">Landlord profile not found.</string>
+
+    <!-- Add Property Screen Strings -->
+    <string name="title_add_property">Add Property</string>
+    <string name="btn_add_property">Add Property</string>
+    <string name="hint_prop_title">Property Title (e.g. 2BHK near OMR)</string>
+    <string name="hint_prop_location">Location (e.g. OMR, Chennai)</string>
+    <string name="hint_rent">Monthly Rent (₹)</string>
+    <string name="hint_bedrooms">Number of Bedrooms</string>
+    <string name="hint_description">Property Description</string>
+
+    <string name="label_amenities_select">Amenities:</string>
+    <string name="amenity_wifi">WiFi</string>
+    <string name="amenity_parking">Parking</string>
+    <string name="amenity_kitchen">Kitchen</string>
+    <string name="amenity_washing">Washing Machine</string>
+    <string name="amenity_ac">AC</string>
+    <string name="amenity_furnished">Furnished</string>
+
+    <string name="label_rules_select">Rules:</string>
+    <string name="rule_smoking_allowed">Smoking Allowed</string>
+    <string name="rule_smoking_not">No Smoking</string>
+    <string name="rule_pets_allowed">Pets Allowed</string>
+    <string name="rule_pets_not">No Pets</string>
+
+    <string name="error_landlord_only">Only users with Landlord role can add properties.</string>
+    <string name="error_invalid_rent">Please enter a valid rent amount.</string>
+    <string name="error_invalid_bedrooms">Please enter a valid number of bedrooms.</string>
+    <string name="property_saved">Property listed successfully!</string>
+    <string name="property_save_failed">Failed to list property.</string>
+    <string name="not_specified">Not specified</string>
+
+    <!-- Logout Strings -->
+    <string name="btn_logout">Logout</string>
+    <string name="logout_success">Logged out successfully</string>
+</resources>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.RentMate">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false"
+            android:label="@string/profile_title" />
+
+        <activity
+            android:name=".PropertyListActivity"
+            android:exported="false"
+            android:label="@string/title_properties" />
+
+        <activity
+            android:name=".PropertyDetailsActivity"
+            android:exported="false"
+            android:label="@string/title_property_details" />
+
+        <activity
+            android:name=".CompatibilityResultActivity"
+            android:exported="false"
+            android:label="@string/title_compatibility" />
+
+        <activity
+            android:name=".RoommateListActivity"
+            android:exported="false"
+            android:label="@string/title_roommates" />
+
+        <activity
+            android:name=".RoommateCompatibilityActivity"
+            android:exported="false"
+            android:label="@string/title_roommate_compatibility" />
+
+        <activity
+            android:name=".LandlordTenantCompatibilityActivity"
+            android:exported="false"
+            android:label="@string/title_landlord_compatibility" />
+
+        <activity
+            android:name=".AddPropertyActivity"
+            android:exported="false"
+            android:label="@string/title_add_property" />
+
+    </application>
+
+</manifest>
