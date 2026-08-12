@@ -168,4 +168,15 @@
     <!-- Logout Strings -->
     <string name="btn_logout">Logout</string>
     <string name="logout_success">Logged out successfully</string>
+
+    <!-- Property Filter Strings -->
+    <string name="hint_search_properties">Search by title or location (e.g. OMR)</string>
+    <string name="hint_min_rent">Min ₹</string>
+    <string name="hint_max_rent">Max ₹</string>
+    <string name="label_filter_type">Type</string>
+    <string name="label_filter_room">Room</string>
+    <string name="label_filter_beds">Beds</string>
+    <string name="btn_apply_filters">Apply</string>
+    <string name="btn_clear_filters">Clear</string>
+    <string name="msg_no_match">No properties match your filters.</string>
 </resources>

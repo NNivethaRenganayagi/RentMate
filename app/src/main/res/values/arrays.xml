@@ -5,4 +5,25 @@
         <item>Normal</item>
         <item>Night Owl</item>
     </string-array>
+
+    <string-array name="filter_property_types">
+        <item>All Types</item>
+        <item>Apartment</item>
+        <item>Independent House</item>
+        <item>PG</item>
+    </string-array>
+
+    <string-array name="filter_room_types">
+        <item>All Rooms</item>
+        <item>Private</item>
+        <item>Shared</item>
+    </string-array>
+
+    <string-array name="filter_bedroom_options">
+        <item>All Beds</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4+</item>
+    </string-array>
 </resources>
