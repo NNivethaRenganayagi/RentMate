@@ -178,6 +178,16 @@
     <string name="property_saved">Property listed successfully!</string>
     <string name="property_save_failed">Failed to list property.</string>
     <string name="property_updated">Property updated successfully!</string>
+
+    <!-- Property Details Redesign -->
+    <string name="label_property_info">Property Information</string>
+    <string name="label_amenities_header">Amenities</string>
+    <string name="label_rules_header">Rules</string>
+    <string name="label_lease_duration_header">Lease Duration</string>
+    <string name="label_description_header">Description</string>
+    <string name="per_month">/ month</string>
+    <string name="no_description">No description provided.</string>
+
     <string name="btn_my_properties">My Properties</string>
     <string name="btn_find_properties">Find Properties</string>
     <string name="property_deleted">Property deleted successfully!</string>

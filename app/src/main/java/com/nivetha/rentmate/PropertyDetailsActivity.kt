@@ -60,15 +60,15 @@ class PropertyDetailsActivity : AppCompatActivity() {
                     property?.let {
                         tvTitle.text = it.title
                         tvRent.text = "₹${it.rent}"
-                        tvLocation.text = "${getString(R.string.label_location)}${it.location}"
-                        tvType.text = "${getString(R.string.label_property_type)}${it.propertyType}"
-                        tvBedrooms.text = "${getString(R.string.label_bedrooms)}${it.bedrooms}"
-                        tvRoomType.text = "${getString(R.string.label_room_type)}${it.roomType}"
-                        val leaseText = if (it.leaseDuration.isNullOrEmpty()) getString(R.string.not_specified) else it.leaseDuration
-                        tvLease.text = "${getString(R.string.hint_lease_duration)}: $leaseText"
-                        tvAmenities.text = "${getString(R.string.label_amenities)}${it.amenities}"
-                        tvRules.text = "${getString(R.string.label_rules)}${it.rules}"
-                        tvDescription.text = "${getString(R.string.label_description)}${it.description}"
+                        tvLocation.text = it.location
+                        tvType.text = it.propertyType
+                        tvBedrooms.text = "${it.bedrooms} BHK"
+                        tvRoomType.text = it.roomType
+                        
+                        tvAmenities.text = if (it.amenities.isNullOrEmpty()) getString(R.string.not_specified) else it.amenities
+                        tvRules.text = if (it.rules.isNullOrEmpty()) getString(R.string.not_specified) else it.rules
+                        tvLease.text = if (it.leaseDuration.isNullOrEmpty()) getString(R.string.not_specified) else it.leaseDuration
+                        tvDescription.text = if (it.description.isNullOrEmpty()) getString(R.string.no_description) else it.description
 
                         // Check ownership
                         if (it.ownerId == auth.currentUser?.uid) {

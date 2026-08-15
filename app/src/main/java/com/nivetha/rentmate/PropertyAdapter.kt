@@ -15,6 +15,9 @@ class PropertyAdapter(
         val tvTitle: TextView = view.findViewById(R.id.tvPropertyTitle)
         val tvLocation: TextView = view.findViewById(R.id.tvPropertyLocation)
         val tvRent: TextView = view.findViewById(R.id.tvPropertyRent)
+        val tvBHK: TextView = view.findViewById(R.id.tvPropertyBHK)
+        val tvType: TextView = view.findViewById(R.id.tvPropertyType)
+        val tvRoom: TextView = view.findViewById(R.id.tvPropertyRoom)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
@@ -28,6 +31,10 @@ class PropertyAdapter(
         holder.tvTitle.text = property.title
         holder.tvLocation.text = property.location
         holder.tvRent.text = "₹${property.rent}"
+        
+        holder.tvBHK.text = "${property.bedrooms} BHK"
+        holder.tvType.text = property.propertyType
+        holder.tvRoom.text = property.roomType
         
         holder.itemView.setOnClickListener { onItemClick(property) }
     }
