@@ -8,6 +8,14 @@
     <string name="toggle_signup">Don\'t have an account? Sign Up</string>
     <string name="toggle_login">Already have an account? Login</string>
     <string name="welcome_rentmate">Welcome to RentMate</string>
+    <string name="subtitle_tenant">Find a place that feels like home.</string>
+    <string name="subtitle_landlord">Manage your rental properties.</string>
+
+    <string name="desc_find_properties">Discover rental properties that match your preferences.</string>
+    <string name="desc_find_roommates">Find compatible roommates based on your lifestyle.</string>
+    <string name="desc_my_properties">View and manage your listed properties.</string>
+    <string name="desc_add_property">List a new rental property on RentMate.</string>
+
     <string name="error_empty">Email and password cannot be empty</string>
     <string name="auth_failed">Authentication failed.</string>
 

@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -33,7 +35,12 @@ class HomeActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         val pbLoading = findViewById<ProgressBar>(R.id.pbHomeLoading)
-        val tvWelcome = findViewById<TextView>(R.id.tvWelcome)
+        val scrollHome = findViewById<ScrollView>(R.id.scrollHome)
+        val tvSubtitle = findViewById<TextView>(R.id.tvSubtitle)
+        
+        val layoutTenant = findViewById<LinearLayout>(R.id.layoutTenantActions)
+        val layoutLandlord = findViewById<LinearLayout>(R.id.layoutLandlordActions)
+        
         val btnEditProfile = findViewById<Button>(R.id.btnEditProfile)
         val btnFindProperties = findViewById<Button>(R.id.btnViewProperties)
         val btnMyProperties = findViewById<Button>(R.id.btnMyProperties)
@@ -41,8 +48,7 @@ class HomeActivity : AppCompatActivity() {
         val btnAddProperty = findViewById<Button>(R.id.btnAddPropertyHome)
         val btnLogout = findViewById<Button>(R.id.btnLogoutHome)
 
-        loadUserRoleAndSetupUI(pbLoading, tvWelcome, btnEditProfile, btnFindProperties, 
-            btnMyProperties, btnFindRoommates, btnAddProperty, btnLogout)
+        loadUserRoleAndSetupUI(pbLoading, scrollHome, tvSubtitle, layoutTenant, layoutLandlord)
 
         btnEditProfile.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
@@ -79,44 +85,39 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun loadUserRoleAndSetupUI(
-        pb: ProgressBar, tvWelcome: TextView, btnEdit: Button, 
-        btnFindProp: Button, btnMyProp: Button, btnFindRoom: Button, 
-        btnAddProp: Button, btnLog: Button
+        pb: ProgressBar, scroll: ScrollView, tvSubtitle: TextView,
+        layoutTenant: LinearLayout, layoutLandlord: LinearLayout
     ) {
         val uid = auth.currentUser?.uid ?: return
         pb.visibility = View.VISIBLE
+        scroll.visibility = View.GONE
 
         db.collection("users").document(uid).get()
             .addOnSuccessListener { doc ->
                 pb.visibility = View.GONE
+                scroll.visibility = View.VISIBLE
                 if (doc.exists()) {
                     val role = doc.getString("role") ?: "Tenant"
-                    tvWelcome.visibility = View.VISIBLE
-                    btnEdit.visibility = View.VISIBLE
-                    btnLog.visibility = View.VISIBLE
 
                     if (role == "Landlord") {
-                        btnMyProp.visibility = View.VISIBLE
-                        btnAddProp.visibility = View.VISIBLE
-                        btnFindProp.visibility = View.GONE
-                        btnFindRoom.visibility = View.GONE
+                        tvSubtitle.text = getString(R.string.subtitle_landlord)
+                        layoutLandlord.visibility = View.VISIBLE
+                        layoutTenant.visibility = View.GONE
                     } else {
-                        btnFindProp.visibility = View.VISIBLE
-                        btnFindRoom.visibility = View.VISIBLE
-                        btnMyProp.visibility = View.GONE
-                        btnAddProp.visibility = View.GONE
+                        tvSubtitle.text = getString(R.string.subtitle_tenant)
+                        layoutTenant.visibility = View.VISIBLE
+                        layoutLandlord.visibility = View.GONE
                     }
                 } else {
-                    // Safe fallback for new users without profile doc yet
-                    tvWelcome.visibility = View.VISIBLE
-                    btnEdit.visibility = View.VISIBLE
-                    btnLog.visibility = View.VISIBLE
-                    btnFindProp.visibility = View.VISIBLE
-                    btnFindRoom.visibility = View.VISIBLE
+                    // Safe fallback for new users
+                    tvSubtitle.text = getString(R.string.subtitle_tenant)
+                    layoutTenant.visibility = View.VISIBLE
+                    layoutLandlord.visibility = View.GONE
                 }
             }
             .addOnFailureListener {
                 pb.visibility = View.GONE
+                scroll.visibility = View.VISIBLE
                 Toast.makeText(this, "Error loading profile", Toast.LENGTH_SHORT).show()
             }
     }
