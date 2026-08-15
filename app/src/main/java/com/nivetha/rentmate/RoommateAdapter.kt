@@ -13,6 +13,7 @@ class RoommateAdapter(
 
     class RoommateViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvName: TextView = view.findViewById(R.id.tvRoommateName)
+        val tvAge: TextView = view.findViewById(R.id.tvRoommateAge)
         val tvInfo: TextView = view.findViewById(R.id.tvRoommateInfo)
         val tvLifestyle: TextView = view.findViewById(R.id.tvRoommateLifestyle)
     }
@@ -26,8 +27,9 @@ class RoommateAdapter(
     override fun onBindViewHolder(holder: RoommateViewHolder, position: Int) {
         val roommate = roommates[position]
         holder.tvName.text = roommate.fullName
-        holder.tvInfo.text = "${roommate.age} | ${roommate.location} | Budget: ₹${roommate.budget}"
-        holder.tvLifestyle.text = "Lifestyle: ${roommate.sleepSchedule} | Food: ${roommate.foodPreference}"
+        holder.tvAge.text = "${roommate.age} years"
+        holder.tvInfo.text = "${roommate.location} | Budget: ₹${roommate.budget}"
+        holder.tvLifestyle.text = "${roommate.sleepSchedule} • ${roommate.foodPreference}"
         
         holder.itemView.setOnClickListener { onItemClick(roommate) }
     }

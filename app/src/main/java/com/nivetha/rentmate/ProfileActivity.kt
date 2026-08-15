@@ -171,7 +171,7 @@ class ProfileActivity : AppCompatActivity() {
             "location" to location,
             "leaseDuration" to etLease.text.toString().trim(),
             "amenities" to etAmen.text.toString().trim(),
-            "role" to currentUserRole // Locked role
+            "role" to currentUserRole
         )
 
         if (currentUserRole == "Landlord") {
@@ -203,8 +203,7 @@ class ProfileActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.profile_saved, Toast.LENGTH_SHORT).show()
                 finish()
             }
-            .addOnFailureListener { e ->
-                // If update fails (e.g. doc doesn't exist yet for new users), try set()
+            .addOnFailureListener {
                 db.collection("users").document(uid).set(userProfileMap)
                     .addOnSuccessListener {
                         pb.visibility = View.GONE

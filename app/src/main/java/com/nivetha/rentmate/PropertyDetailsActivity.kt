@@ -70,9 +70,15 @@ class PropertyDetailsActivity : AppCompatActivity() {
                         tvLease.text = if (it.leaseDuration.isNullOrEmpty()) getString(R.string.not_specified) else it.leaseDuration
                         tvDescription.text = if (it.description.isNullOrEmpty()) getString(R.string.no_description) else it.description
 
-                        // Check ownership
+                        // Check ownership and toggle visibility
                         if (it.ownerId == auth.currentUser?.uid) {
                             layoutManagement.visibility = View.VISIBLE
+                            btnCheckCompatibility.visibility = View.GONE
+                            btnCheckLandlordCompatibility.visibility = View.GONE
+                        } else {
+                            layoutManagement.visibility = View.GONE
+                            btnCheckCompatibility.visibility = View.VISIBLE
+                            btnCheckLandlordCompatibility.visibility = View.VISIBLE
                         }
                     }
                 }

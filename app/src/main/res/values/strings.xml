@@ -179,6 +179,16 @@
     <string name="property_save_failed">Failed to list property.</string>
     <string name="property_updated">Property updated successfully!</string>
 
+    <!-- UI Redesign Headers -->
+    <string name="label_section_basic">Basic Information</string>
+    <string name="label_section_rental">Rental Details</string>
+    <string name="label_section_lifestyle">Lifestyle</string>
+    <string name="label_section_preferences">Preferences</string>
+    <string name="label_policy_smoking">Smoking Policy</string>
+    <string name="label_policy_pets">Pet Policy</string>
+    <string name="label_why_match_property">Why this property matches</string>
+    <string name="msg_no_roommates_found">No compatible roommates found.</string>
+
     <!-- Property Details Redesign -->
     <string name="label_property_info">Property Information</string>
     <string name="label_amenities_header">Amenities</string>
